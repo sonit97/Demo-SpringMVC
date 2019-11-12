@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		">
+<!-- property tham chieu den ten bien -->
+
+<!-- <bean id="databasetest" class="net.sonnpt.entity.DatabaseTest">
+	<property name="dataSource" ref="dataSource"></property>
+</bean>
+ -->
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+    	<property name="url" value="jdbc:jtds:sqlserver://localhost:1433/File;instance=SQLEXPRESS" />
+    	<property name="username" value="sa" />
+   		 <property name="password" value="1234" />
+	</bean>
+	
+	<!--Thuc hien ket noi voi database va truy van  -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="packagesToScan" value="net.sonnpt.entity"></property><!--cho phep sessionFactory doc cac dinh danh at pagekage nao de mapping voi sql  -->
+		<property name="hibernateProperties"><!-- Thuc hien truy van cua csdl nao:sql,mysql,oracle,... -->
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">true</prop><!-- Cho phep hien thi cac cau truy van sql len trinh duyet cua chung ta -->
+			</props>			
+		</property>
+	</bean>
+	
+	<!-- Khai bao transaction :không can phai begin end khi ket noi csdl -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/><!-- Cho phep su dung transaction manager:các annotation -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- <bean name="nhanVien" class="net.sonnpt.entity.NhanVien" scope="singleton">
+		<constructor-arg name="tenNhanVien" value="Ahihi"></constructor-arg>
+			<property name="list">
+				<list>
+					<ref bean="giamdoc"/>
+					<ref bean="giamdoc1"/>
+					<ref bean="giamdoc2"/>
+				
+				</list>
+				
+			</property>
+		
+		<property name="tenNhanVien" value="SonNPT"></property>
+	
+	</bean> 
+ <bean id="giamdoc" class="net.sonnpt.entity.GiamDoc">  
+	
+		<constructor-arg value="giam sdoc1"></constructor-arg>
+		<constructor-arg value="Quang Nam"></constructor-arg>
+		<constructor-arg value="22"></constructor-arg>
+	</bean>
+	 <bean id="giamdoc1" class="net.sonnpt.entity.GiamDoc">  
+	
+		<constructor-arg value="giam sdoc2"></constructor-arg>
+		<constructor-arg value="Quang Nam"></constructor-arg>
+		<constructor-arg value="22"></constructor-arg>
+	</bean>
+	 <bean id="giamdoc2" class="net.sonnpt.entity.GiamDoc">  
+	
+		<constructor-arg value="giam sdoc3"></constructor-arg>
+		<constructor-arg value="Quang Nam"></constructor-arg>
+		<constructor-arg value="22"></constructor-arg>
+	</bean> -->
+
+	
+	
+	
+</beans>
